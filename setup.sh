@@ -1,8 +1,12 @@
 #!/bin/bash
 
 # Запрос имени нового пользователя
-echo "Enter new user:"
+echo "Enter new username:"
 read username
+
+# Запрос домена 
+echo "Enter domain name:"
+read domainname
 
 # Проверка, было ли введено имя пользователя
 if [ -z "$username" ]; then
@@ -13,13 +17,28 @@ else
     sudo adduser "$username"
 fi
 
+# Добавить пользователя в группу sudo
+sudo adduser "$username" sudo
+groups "$username"
+
+# Установка Nginx
+sudo apt install nginx -y
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+# Firewall
+sudo ufw allow "OpenSSH"
+sudo ufw allow 'Nginx HTTPS'
+sudo ufw enable
+sudo ufw status
+
 
 # Обновление списка пакетов и установка обновлений
 # sudo apt update && sudo apt upgrade -y
 
 # Установка Nginx
-sudo apt install nginx -y
+# sudo apt install nginx -y
 
 # Включение и запуск Nginx
-sudo systemctl enable nginx
-sudo systemctl start nginx
+# sudo systemctl enable nginx
+# sudo systemctl start nginx
