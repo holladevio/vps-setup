@@ -64,11 +64,11 @@ sudo ufw allow 'Nginx HTTPS' > /dev/null
 # sudo ufw status
 
 # SSL
-sudo snap install core; sudo snap refresh core > /dev/null
-sudo apt remove certbot > /dev/null
-sudo snap install --classic certbot > /dev/null
-sudo ln -s /snap/bin/certbot /usr/bin/certbot > /dev/null
-sudo certbot --nginx -d "$domain" -d "www.$domain" > /dev/null
+sudo snap install core; sudo snap refresh core
+sudo apt remove certbot
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot --nginx -d "$domain" -d "www.$domain"
 sudo systemctl status snap.certbot.renew.service
 
 # Enable Firewall
