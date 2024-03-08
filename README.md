@@ -6,22 +6,14 @@
 sudo apt update && sudo apt upgrade
 ```
 
-## Setup Server
+### Setup Server
 
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/holladevio/vps-setup/main/setup.sh)"
 ```
-or
-```shell
-sh -c "$(wget -O - https://raw.githubusercontent.com/holladevio/vps-setup/main/setup.sh)"
-```
 
-## Setup SSL
+### Setup SSL
 
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/holladevio/vps-setup/main/setupssl)"
-```
-or
-```shell
-sh -c "$(wget -O - https://raw.githubusercontent.com/holladevio/vps-setup/main/setupssl)"
 ```
