@@ -56,7 +56,7 @@ config_file="/etc/nginx/sites-available/$domain"
 sudo touch "$config_file" > /dev/null
 echo "server {
     listen 80;
-    server_name $domain www.$domain;
+    server_name $domain;
 
     root /var/www/$domain/html;
     index index.html index.htm index.nginx-debian.html;
