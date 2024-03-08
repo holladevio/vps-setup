@@ -18,16 +18,19 @@ else
 fi
 
 # Добавить пользователя в группу sudo
-sudo adduser "$username" sudo
+echo "Add user:$username to \"sudo\" group"
+sudo adduser "$username" sudo > /dev/null
 # groups "$username"
 
 # SSH
-rsync --archive --chown="$username":"$username" ~/.ssh /home/"$username"
+echo "Config SSH for user:$username"
+rsync --archive --chown="$username":"$username" ~/.ssh /home/"$username"  > /dev/null
 
 # Create Server Block
-sudo mkdir -p /var/www/"$domain"/html
-sudo chown -R "$username":"$username" /var/www/"$domain"
-sudo chmod -R 755 /var/www/"$domain"
+echo "Create Server Block for domain:$domain"
+sudo mkdir -p /var/www/"$domain"/html > /dev/null
+sudo chown -R "$username":"$username" /var/www/"$domain" > /dev/null
+sudo chmod -R 755 /var/www/"$domain" > /dev/null
 
 # Install Nginx
 echo "Install Nginx"
@@ -36,8 +39,9 @@ sudo systemctl enable nginx > /dev/null
 sudo systemctl start nginx > /dev/null
 
 # Setup Nginx for Server Block
+echo "Setup Nginx for Server Block"
 config_file="/etc/nginx/sites-available/$domain"
-sudo touch "$config_file"
+sudo touch "$config_file" > /dev/null
 echo "server {
     listen 80;
     server_name $domain www.$domain;
