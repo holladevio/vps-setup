@@ -2,7 +2,7 @@
 
 # Запрос домена 
 echo "Enter domain name:"
-read domainname
+read domain
 
 # Запрос имени нового пользователя
 echo "Enter new username:"
@@ -21,37 +21,42 @@ fi
 sudo adduser "$username" sudo
 # groups "$username"
 
-# Install Nginx
-sudo apt install nginx -y
-sudo systemctl enable nginx
-sudo systemctl start nginx
-
 # SSH
-rsync --archive —chown="$username":"$username" ~/.ssh /home/"$username"
+rsync --archive --chown="$username":"$username" ~/.ssh /home/"$username"
 
 # Create Server Block
-sudo mkdir -p /var/www/"$domainname"/web
-sudo chown -R "$username":"$username" /var/www/"$domainname"
-sudo chmod -R 755 /var/www/"$domainname"
+sudo mkdir -p /var/www/"$domain"/html
+sudo chown -R "$username":"$username" /var/www/"$domain"
+sudo chmod -R 755 /var/www/"$domain"
+
+# Install Nginx
+echo "Install Nginx"
+sudo apt install nginx -y > /dev/null
+sudo systemctl enable nginx > /dev/null
+sudo systemctl start nginx > /dev/null
 
 # Setup Nginx for Server Block
-config_file="/etc/nginx/sites-available/$domainname"
+config_file="/etc/nginx/sites-available/$domain"
 sudo touch "$config_file"
 echo "server {
     listen 80;
-    server_name $domainname www.$domainname;
+    server_name $domain www.$domain;
 
-    root /var/www/$domainname/html;
+    root /var/www/$domain/html;
     index index.html index.htm index.nginx-debian.html;
 
     location / {
         try_files \$uri \$uri/ =404;
     }
-}" > "$config_file"
+}" | sudo tee "$config_file" > /dev/null
 
 # Setup Firewall
-sudo ufw allow "OpenSSH"
-sudo ufw allow 'Nginx HTTPS'
+echo "Setup Firewall for OpenSSH"
+sudo ufw allow "OpenSSH" > /dev/null
+
+echo "Setup Firewall for Nginx HTTPS"
+sudo ufw allow 'Nginx HTTPS' > /dev/null
+
 # yes | sudo ufw enable
 # sudo ufw status
 
