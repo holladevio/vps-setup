@@ -15,3 +15,13 @@ or
 ```shell
 sh -c "$(wget -O - https://raw.githubusercontent.com/holladevio/vps-setup/main/setup.sh)"
 ```
+
+## Setup SSL
+
+```shell
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/holladevio/vps-setup/main/setupssl)"
+```
+or
+```shell
+sh -c "$(wget -O - https://raw.githubusercontent.com/holladevio/vps-setup/main/setupssl)"
+```
