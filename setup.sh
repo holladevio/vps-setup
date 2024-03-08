@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Запрос имени нового пользователя
-echo "Enter new username:"
-read username
-
 # Запрос домена 
 echo "Enter domain name:"
 read domainname
+
+# Запрос имени нового пользователя
+echo "Enter new username:"
+read username
 
 # Проверка, было ли введено имя пользователя
 if [ -z "$username" ]; then
@@ -19,7 +19,7 @@ fi
 
 # Добавить пользователя в группу sudo
 sudo adduser "$username" sudo
-groups "$username"
+# groups "$username"
 
 # Установка Nginx
 sudo apt install nginx -y
@@ -30,7 +30,7 @@ sudo systemctl start nginx
 sudo ufw allow "OpenSSH"
 sudo ufw allow 'Nginx HTTPS'
 sudo ufw enable
-sudo ufw status
+# sudo ufw status
 
 
 # Обновление списка пакетов и установка обновлений
