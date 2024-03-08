@@ -61,16 +61,16 @@ sudo ufw allow "OpenSSH" > /dev/null
 
 echo "Setup Firewall for Nginx HTTPS"
 sudo ufw allow 'Nginx HTTPS' > /dev/null
-
-# yes | sudo ufw enable
 # sudo ufw status
 
-# Обновление списка пакетов и установка обновлений
-# sudo apt update && sudo apt upgrade -y
+# SSL
+sudo snap install core; sudo snap refresh core > /dev/null
+sudo apt remove certbot > /dev/null
+sudo snap install --classic certbot > /dev/null
+sudo ln -s /snap/bin/certbot /usr/bin/certbot > /dev/null
+sudo certbot --nginx -d "$domain" -d "www.$domain" > /dev/null
+sudo systemctl status snap.certbot.renew.service
 
-# Установка Nginx
-# sudo apt install nginx -y
+# Enable Firewall
+yes | sudo ufw enable
 
-# Включение и запуск Nginx
-# sudo systemctl enable nginx
-# sudo systemctl start nginx
