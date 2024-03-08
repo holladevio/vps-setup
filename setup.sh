@@ -34,7 +34,7 @@ sudo chmod -R 755 /var/www/"$domain" > /dev/null
 
 # Install Nginx
 echo "Install Nginx"
-sudo apt install nginx -y > /dev/null
+sudo apt-get install nginx -y > /dev/null 2>&1
 sudo systemctl enable nginx > /dev/null
 sudo systemctl start nginx > /dev/null
 
@@ -53,6 +53,7 @@ echo "server {
         try_files \$uri \$uri/ =404;
     }
 }" | sudo tee "$config_file" > /dev/null
+sudo ln -s "$config_file" /etc/nginx/sites-enabled/ > /dev/null
 
 # Setup Firewall
 echo "Setup Firewall for OpenSSH"
