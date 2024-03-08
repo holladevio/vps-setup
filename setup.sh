@@ -29,6 +29,18 @@ rsync --archive --chown="$username":"$username" ~/.ssh /home/"$username"  > /dev
 # Create Server Block
 echo "Create Server Block for domain:$domain"
 sudo mkdir -p /var/www/"$domain"/html > /dev/null
+
+index_html="/var/www/$domain/html/index.html"
+sudo touch "$index_html" > /dev/null
+echo "<html>
+    <head>
+        <title>Welcome to $domain!</title>
+    </head>
+    <body>
+        <h1>Success! The $domain server block is working!</h1>
+    </body>
+</html>" | sudo tee "$index_html" > /dev/null
+
 sudo chown -R "$username":"$username" /var/www/"$domain" > /dev/null
 sudo chmod -R 755 /var/www/"$domain" > /dev/null
 
