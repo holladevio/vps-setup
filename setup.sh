@@ -72,7 +72,7 @@ echo "Setup Firewall for OpenSSH"
 sudo ufw allow "OpenSSH" > /dev/null
 
 echo "Setup Firewall for Nginx HTTPS"
-sudo ufw allow 'Nginx HTTPS' > /dev/null
+sudo ufw allow 'Nginx Full' > /dev/null
 
 # Enable Firewall
 yes | sudo ufw enable
