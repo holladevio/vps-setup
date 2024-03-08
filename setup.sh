@@ -29,7 +29,7 @@ sudo systemctl start nginx
 # Setup Firewall
 sudo ufw allow "OpenSSH"
 sudo ufw allow 'Nginx HTTPS'
-sudo ufw enable
+# sudo ufw enable
 # sudo ufw status
 
 # SSH
