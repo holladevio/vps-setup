@@ -34,9 +34,9 @@ sudo chmod -R 755 /var/www/"$domain" > /dev/null
 
 # Install Nginx
 echo "Install Nginx"
-sudo apt-get install nginx -y > /dev/null 2>&1
-sudo systemctl enable nginx > /dev/null
-sudo systemctl start nginx > /dev/null
+sudo apt-get install nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
 
 # Setup Nginx for Server Block
 echo "Setup Nginx for Server Block"
