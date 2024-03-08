@@ -26,12 +26,6 @@ sudo apt install nginx -y
 sudo systemctl enable nginx
 sudo systemctl start nginx
 
-# Setup Firewall
-sudo ufw allow "OpenSSH"
-sudo ufw allow 'Nginx HTTPS'
-# yes | sudo ufw enable
-# sudo ufw status
-
 # SSH
 rsync --archive —chown="$username":"$username" ~/.ssh /home/"$username"
 
@@ -54,6 +48,12 @@ echo "server {
         try_files \$uri \$uri/ =404;
     }
 }" > "$config_file"
+
+# Setup Firewall
+sudo ufw allow "OpenSSH"
+sudo ufw allow 'Nginx HTTPS'
+# yes | sudo ufw enable
+# sudo ufw status
 
 # Обновление списка пакетов и установка обновлений
 # sudo apt update && sudo apt upgrade -y
