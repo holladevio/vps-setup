@@ -1,6 +1,6 @@
-# vps-setup
+# Setup VPS (Ubuntu)
 
-## Update OS
+### Update OS
 
 ```shell
 sudo apt update && sudo apt upgrade
