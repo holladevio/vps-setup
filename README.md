@@ -23,3 +23,9 @@ sh -c "$(https://raw.githubusercontent.com/holladevio/vps-setup/main/adduser)"
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/holladevio/vps-setup/main/setupssl)"
 ```
+
+### Setup For Docker
+
+```shell
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/holladevio/vps-setup/main/setup-for-docker)"
+```
