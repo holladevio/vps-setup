@@ -20,7 +20,7 @@ fi
 # Добавить пользователя в группу sudo
 echo "Add user:$username to \"sudo\" group"
 sudo adduser "$username" sudo > /dev/null
-# groups "$username"
+sudo adduser "$username" docker > /dev/null
 
 # SSH
 echo "Config SSH for user:$username"
