@@ -12,6 +12,12 @@ sudo apt update && sudo apt upgrade
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/holladevio/vps-setup/main/setup.sh)"
 ```
 
+### Add User And SSH
+
+```shell
+sh -c "$(https://raw.githubusercontent.com/holladevio/vps-setup/main/adduser)"
+```
+
 ### Setup SSL
 
 ```shell
