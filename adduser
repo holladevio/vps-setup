@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Запрос домена 
+echo "Enter domain name:"
+read domain
+
+# Запрос имени нового пользователя
+echo "Enter new username:"
+read username
+
+# Проверка, было ли введено имя пользователя
+if [ -z "$username" ]; then
+    echo "Имя пользователя не введено. Скрипт будет остановлен."
+    exit 1
+else
+    # Создание нового пользователя
+    sudo adduser "$username"
+fi
+
+# Добавить пользователя в группу sudo
+echo "Add user:$username to \"sudo\" group"
+sudo adduser "$username" sudo > /dev/null
+sudo adduser "$username" docker > /dev/null
+
+# SSH
+echo "Config SSH for user:$username"
+rsync --archive --chown="$username":"$username" ~/.ssh /home/"$username"  > /dev/null
