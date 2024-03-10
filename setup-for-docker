@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# Запрос домена 
+echo "Enter domain name:"
+read domain
+
+# Запрос имени нового пользователя
+echo "Enter new username:"
+read username
+
+# Проверка, было ли введено имя пользователя
+if [ -z "$username" ]; then
+    echo "Имя пользователя не введено. Скрипт будет остановлен."
+    exit 1
+else
+    # Создание нового пользователя
+    sudo adduser "$username"
+fi
+
+# Добавить пользователя в группу sudo
+echo "Add user:$username to \"sudo\" group"
+sudo adduser "$username" sudo > /dev/null
+sudo adduser "$username" docker > /dev/null
+
+# SSH
+echo "Config SSH for user:$username"
+rsync --archive --chown="$username":"$username" ~/.ssh /home/"$username"  > /dev/null
+
+# Install Nginx
+echo "Install Nginx"
+sudo apt-get install nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+# Setup Nginx for Server Block
+echo "Setup Nginx for Server Block"
+config_file="/etc/nginx/sites-available/$domain"
+sudo touch "$config_file" > /dev/null
+echo "server {
+    listen 80;
+    server_name $domain;
+
+    location / {
+        proxy_pass localhost:8080; # Перенаправление запросов к вашему приложению
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}" | sudo tee "$config_file" > /dev/null
+sudo ln -s "$config_file" /etc/nginx/sites-enabled/ > /dev/null
+
+# Setup Firewall
+echo "Setup Firewall for OpenSSH"
+sudo ufw allow "OpenSSH" > /dev/null
+
+echo "Setup Firewall for Nginx HTTPS"
+sudo ufw allow 'Nginx Full' > /dev/null
+
+# Enable Firewall
+yes | sudo ufw enable
